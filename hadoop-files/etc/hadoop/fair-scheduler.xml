@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<allocations>
+    <!-- 单个队列内的Application Manager能占用总队列总资源的比例 -->
+    <queueMaxAMShareDefault>0.6</queueMaxAMShareDefault>
+    <!-- 队列总资源，即整个集群所拥有的内存资源以及虚拟核数 -->
+    <queueMaxResourcesDefault>48000mb,22vcores</queueMaxResourcesDefault>
+    <!-- 新队列名字以及配置 -->
+    <queue name="test">
+        <!-- 单个任务最小资源与虚拟核数 -->
+        <minResources>2048mb,2vcores</minResources>
+        <!-- 单个任务最大资源与虚拟核书 -->
+        <maxResources>16000mb,8vcores</maxResources>
+        <!-- 最大运行APP数量，超过后后续的AM任务将进入Pending状态 -->
+        <maxRunningApps>4</maxRunningApps>
+        <!-- 单个APP能占用队列总数的资源比例 -->
+        <maxAMShare>0.8</maxAMShare>
+        <weight>1.0</weight>
+        <!-- 调度方式：公平调度 -->
+        <schedulingPolicy>fair</schedulingPolicy>
+    </queue>
+    <!-- 同上 -->
+    <queue name="csob">
+        <minResources>2048mb,2vcores</minResources>
+        <maxResources>16000mb,8vcores</maxResources>
+        <maxRunningApps>4</maxRunningApps>
+        <maxAMShare>0.8</maxAMShare>
+        <weight>1.0</weight>
+        <schedulingPolicy>fair</schedulingPolicy>
+    </queue>
+
+    <queuePlacementPolicy>
+        <rule name="specified" create="false"/>
+        <!-- 部署任务时指定队列名，任务仅运行于指定队列 -->
+        <rule name="nestedUserQueue" create="true">
+            <rule name="primaryGroup" create="false"/>
+        </rule>
+        <!-- name=default：未指定队列名时进入default队列 -->
+        <!-- name=reject： 未指定队列名时将拒绝该任务 -->
+        <rule name="default"/>
+    </queuePlacementPolicy>
+</allocations>

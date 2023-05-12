@@ -1,0 +1,5 @@
+# located in /etc/hosts
+
+172.29.239.21	node1
+172.29.239.22	node2
+172.29.239.20	master
